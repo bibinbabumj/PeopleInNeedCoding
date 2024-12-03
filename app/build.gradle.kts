@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    val room_version = "2.6.1"
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -59,25 +61,18 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
-    // Hilt ViewModel Integration
-//    implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
-//    kapt ("androidx.hilt:hilt-compiler:1.0.0")
 
     // Lifecycle dependencies
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
 
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt( "androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-ktx:2.5.2")
 
-    //
 
-//    testImplementation ("org.mockito:mockito-core:4.6.1")
-//    testImplementation ("org.mockito:mockito-inline:4.6.1")
-//    // For LiveData testing
-//    testImplementation ("androidx.arch.core:core-testing:2.1.0")
-//    // For coroutine testing
-//    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
-//
 
     // Test
     testImplementation ("com.willowtreeapps.assertk:assertk:0.26.1")

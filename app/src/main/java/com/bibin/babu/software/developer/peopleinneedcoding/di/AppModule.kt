@@ -1,5 +1,9 @@
 package com.bibin.babu.software.developer.peopleinneedcoding.di
 
+import android.app.Application
+import androidx.room.Room
+import com.bibin.babu.software.developer.peopleinneedcoding.data.local.AppDateBase
+import com.bibin.babu.software.developer.peopleinneedcoding.data.local.UserDao
 import com.bibin.babu.software.developer.peopleinneedcoding.data.remote.api.ApiService
 import com.bibin.babu.software.developer.peopleinneedcoding.data.repository.AnalyticsLoggerImpl
 import com.bibin.babu.software.developer.peopleinneedcoding.data.repository.PostRepositoryImpl
@@ -30,14 +34,31 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAnalyticsLogger():AnalyticsLogger{
+    fun provideAnalyticsLogger(): AnalyticsLogger {
         return AnalyticsLoggerImpl()
     }
 
     @Provides
     @Singleton
-    fun providePostRepository(api: ApiService,analyticsLogger: AnalyticsLogger): PostRepository {
-        return PostRepositoryImpl(api,analyticsLogger)
+    fun providesAppDataBase(application: Application): AppDateBase {
+        return Room.databaseBuilder(
+            context = application, klass = AppDateBase::class.java, name = "app_db"
+        ).fallbackToDestructiveMigration().build()
+
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(appDateBase: AppDateBase) = appDateBase.userDao
+
+    @Provides
+    @Singleton
+    fun providePostRepository(
+        api: ApiService,
+        analyticsLogger: AnalyticsLogger,
+        userDao: UserDao
+    ): PostRepository {
+        return PostRepositoryImpl(api, analyticsLogger, userDao)
     }
 
 }

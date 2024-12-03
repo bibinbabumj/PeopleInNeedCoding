@@ -1,18 +1,22 @@
 package com.bibin.babu.software.developer.peopleinneedcoding.data.repository
 
+import com.bibin.babu.software.developer.peopleinneedcoding.data.local.UserDao
 import com.bibin.babu.software.developer.peopleinneedcoding.data.remote.api.ApiService
 import com.bibin.babu.software.developer.peopleinneedcoding.data.remote.dto.PostResponseDto
 import com.bibin.babu.software.developer.peopleinneedcoding.domain.model.PostItem
+import com.bibin.babu.software.developer.peopleinneedcoding.domain.model.UserModel
 import com.bibin.babu.software.developer.peopleinneedcoding.domain.repository.AnalyticsLogger
 import com.bibin.babu.software.developer.peopleinneedcoding.domain.repository.LogParam
 import com.bibin.babu.software.developer.peopleinneedcoding.domain.repository.PostRepository
+import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 import kotlin.coroutines.cancellation.CancellationException
 
 class PostRepositoryImpl(
-    private val api: ApiService, private val analyticsLogger: AnalyticsLogger
+    private val api: ApiService, private val analyticsLogger: AnalyticsLogger,
+    private val userDao: UserDao
 ) : PostRepository {
     //override suspend fun getPosts(): List<PostItem>? = api.getPostsApi().body()
 
@@ -56,4 +60,9 @@ class PostRepositoryImpl(
             Result.failure(e)
         }
     }
+
+    override suspend fun insertUser(user: UserModel) = userDao.insertUser(user)
+
+
+    override fun getAllUserDb(): Flow<List<UserModel>> = userDao.getAllUsers()
 }
