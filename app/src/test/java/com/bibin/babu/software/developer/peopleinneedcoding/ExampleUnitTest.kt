@@ -14,4 +14,12 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    fun safeDivide(a: Int?, b: Int?): Int? {
+        return if (a != null && b != null) {
+            if (b == 0) null else a / b // Handle division by zero safely
+        } else {
+            null
+        }
+    }
 }
