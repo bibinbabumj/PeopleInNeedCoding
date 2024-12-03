@@ -36,11 +36,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding= true
+        dataBinding=true
+    }
 
 }
 
 dependencies {
 
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     val room_version = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
