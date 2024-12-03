@@ -69,7 +69,7 @@ Run > Run Tests in 'test'
 - Room DB
 
 # Task 1 and 2: 
-File: utils/Task1and2.kt
+File: util/Task1and2.kt
 
 Please check the file
 
